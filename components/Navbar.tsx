@@ -80,7 +80,7 @@ export default function Navbar() {
                 </Link>
               )}
               <SignedOut>
-                <SignInButton mode="modal"> {/* dont reload this page fully */}
+                <SignInButton mode="modal">
                   <button className="text-gray-300 hover:text-white transition-colors mt-2 sm:mt-0">
                     Sign In
                   </button>
