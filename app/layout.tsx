@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import Navbar from "@/components/Navbar";
 import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
@@ -26,7 +25,6 @@ export default function RootLayout({
     >
       <html lang="en" suppressHydrationWarning>
         <body className={`${inter.className} bg-black text-white antialiased`}>
-          <Navbar />
           {children}
         </body>
       </html>
