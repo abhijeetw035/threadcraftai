@@ -6,8 +6,8 @@ export default {
   out: "./drizzle",
 
   dbCredentials: {
-    url: "postgresql://threadcraft_ai_owner:BL8JqbPn7vOf@ep-still-morning-a1036b52.ap-southeast-1.aws.neon.tech/threadcraft_ai?sslmode=require",
+    url: `${process.env.DATABASE_URI}`,
     connectionString:
-      "postgresql://threadcraft_ai_owner:BL8JqbPn7vOf@ep-still-morning-a1036b52.ap-southeast-1.aws.neon.tech/threadcraft_ai?sslmode=require",
+      `${process.env.DATABASE_URI}`,
   },
 };

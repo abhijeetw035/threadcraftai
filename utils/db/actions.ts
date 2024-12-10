@@ -1,7 +1,61 @@
 import { db } from "./dbConfig";
 import { eq, sql, desc } from "drizzle-orm";
-import { Users, Subscriptions, GeneratedContent } from "./schema";
+import { Users, GeneratedContent } from "./schema";
 import { sendWelcomeEmail } from "../mailtrap";
+
+export async function saveGeneratedContent(
+  userId: string,
+  content: string,
+  prompt: string,
+  contentType: string
+) {
+  try {
+    const [savedContent] = await db
+      .insert(GeneratedContent)
+      .values({
+        userId: sql`(SELECT id FROM ${Users} WHERE stripe_customer_id = ${userId})`,
+        content,
+        prompt,
+        contentType,
+      })
+      .returning()
+      .execute();
+    return savedContent;
+  } catch (error) {
+    console.error("Error saving generated content:", error);
+    return null;
+  }
+}
+
+export async function getGeneratedContentHistory(
+  userId: string,
+  limit: number = 10
+) {
+  try {
+    const history = await db
+      .select({
+        id: GeneratedContent.id,
+        content: GeneratedContent.content,
+        prompt: GeneratedContent.prompt,
+        contentType: GeneratedContent.contentType,
+        createdAt: GeneratedContent.createdAt,
+      })
+      .from(GeneratedContent)
+      .where(
+        eq(
+          GeneratedContent.userId,
+          sql`(SELECT id FROM ${Users} WHERE stripe_customer_id = ${userId})`
+        )
+      )
+      .orderBy(desc(GeneratedContent.createdAt))
+      .limit(limit)
+      .execute();
+    return history;
+  } catch (error) {
+    console.error("Error fetching generated content history:", error);
+    return [];
+  }
+}
 
 export async function createOrUpdateUser(
   clerkUserId: string,

@@ -6,14 +6,14 @@ const RECIPIENT_EMAIL = "warriordragon168@gmail.com";
 
 const client = new MailtrapClient({ token: TOKEN });
 
-const sender = { name: "Threadcraft AI", email: SENDER_EMAIL };
+const sender = { name: "Trendify AI", email: SENDER_EMAIL };
 
 client
   .send({
     from: sender,
     to: [{ email: RECIPIENT_EMAIL }],
     subject: "Hello from Us!",
-    text: "Welcome to Threadcraft AI! We are excited to have you on board.",
+    text: "Welcome to Trendify AI! We are excited to have you on board.",
   })
   .then(console.log)
   .catch(console.error);
